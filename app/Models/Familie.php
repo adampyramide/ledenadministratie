@@ -10,6 +10,8 @@ class Familie extends Model
     // zorgt ervoor dat je makkelijk testdata kan aanmaken
     use HasFactory;
 
+    protected $table = 'families'; // tabel heet anders dan standaard meervoud
+
     // alle velden die gezet worden als je :create gebruikt op deze model
     protected $fillable = [
         'naam',

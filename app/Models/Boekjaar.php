@@ -9,6 +9,8 @@ class Boekjaar extends Model
 {
     use HasFactory;
 
+    protected $table = 'boekjaren'; // tabel heet anders dan standaard meervoud
+
     protected $fillable = [
         'jaar',
     ];

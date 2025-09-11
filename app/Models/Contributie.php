@@ -9,6 +9,8 @@ class Contributie extends Model
 {
     use HasFactory;
 
+    protected $table = 'contributies'; // tabel heet anders dan standaard meervoud
+
     protected $fillable = [
         'familielid_id',
         'soort_lid_id',
