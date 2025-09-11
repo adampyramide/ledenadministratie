@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('familieleden', function (Blueprint $table) {
             $table->id();
             $table->string('naam', 100);
-            $table->string('adres', 255);
             $table->date('geboortedatum');
             $table->unsignedBigInteger('familie_id');
             $table->unsignedBigInteger('soort_lid_id');
