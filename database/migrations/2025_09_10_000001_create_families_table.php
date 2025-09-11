@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('naam', 100);
             $table->string('adres', 255);
+            $table->timestamps(); //maakt een created_at en updated_at kolom aan
         });
     }
 

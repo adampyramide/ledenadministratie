@@ -18,6 +18,7 @@ return new class extends Migration
             $table->date('geboortedatum');
             $table->unsignedBigInteger('familie_id');
             $table->unsignedBigInteger('soort_lid_id');
+            $table->timestamps(); //maakt een created_at en updated_at kolom aan
             
             // Foreign keys
             $table->foreign('familie_id')->references('id')->on('families')->onDelete('cascade');

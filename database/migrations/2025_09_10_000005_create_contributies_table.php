@@ -17,6 +17,7 @@ return new class extends Migration
             $table->decimal('bedrag', 8, 2);
             $table->unsignedBigInteger('soort_lid_id');
             $table->unsignedBigInteger('boekjaar_id');
+            $table->timestamps(); //maakt een created_at en updated_at kolom aan
             
             // Foreign keys
             $table->foreign('soort_lid_id')->references('id')->on('soorten_leden')->onDelete('cascade');

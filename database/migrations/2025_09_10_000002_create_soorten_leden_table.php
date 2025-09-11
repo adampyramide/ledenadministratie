@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('soorten_leden', function (Blueprint $table) {
             $table->id();
             $table->string('omschrijving', 50);
+            $table->timestamps(); //maakt een created_at en updated_at kolom aan
         });
     }
 

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('boekjaren', function (Blueprint $table) {
             $table->id();
             $table->year('jaar');
+            $table->timestamps(); //maakt een created_at en updated_at kolom aan
         });
     }
 
