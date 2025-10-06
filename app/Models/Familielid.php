@@ -9,7 +9,7 @@ class Familielid extends Model
 {
     use HasFactory;
 
-    protected $table = 'familie_leden'; // tabel heet anders dan standaard meervoud
+    protected $table = 'familieleden'; // tabel heet anders dan standaard meervoud
 
     protected $fillable = [
         'naam',

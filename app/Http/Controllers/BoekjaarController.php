@@ -2,63 +2,55 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Boekjaar;
 use Illuminate\Http\Request;
 
 class BoekjaarController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $boekjaren = Boekjaar::all();
+        return view('boekjaren.index', compact('boekjaren'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('boekjaren.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'jaar' => 'required|integer|unique:boekjaren,jaar',
+        ]);
+
+        Boekjaar::create($validated);
+        return redirect()->route('boekjaren.index')->with('success', 'Boekjaar toegevoegd.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(Boekjaar $boekjaren)
     {
-        //
+        return view('boekjaren.show', ['boekjaar' => $boekjaren]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit(Boekjaar $boekjaren)
     {
-        //
+        return view('boekjaren.edit', ['boekjaar' => $boekjaren]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Boekjaar $boekjaren)
     {
-        //
+        $validated = $request->validate([
+            'jaar' => 'required|integer|unique:boekjaren,jaar,' . $boekjaren->id,
+        ]);
+
+        $boekjaren->update($validated);
+        return redirect()->route('boekjaren.index')->with('success', 'Boekjaar bijgewerkt.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(Boekjaar $boekjaren)
     {
-        //
+        $boekjaren->delete();
+        return redirect()->route('boekjaren.index')->with('success', 'Boekjaar verwijderd.');
     }
 }

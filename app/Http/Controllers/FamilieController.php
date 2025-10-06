@@ -2,63 +2,57 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Familie;
 use Illuminate\Http\Request;
 
 class FamilieController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $families = Familie::all();
+        return view('families.index', compact('families'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('families.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'naam' => 'required|string|max:255',
+            'adres' => 'nullable|string|max:255',
+        ]);
+
+        Familie::create($validated);
+        return redirect()->route('families.index')->with('success', 'Familie toegevoegd.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(Familie $family)
     {
-        //
+        return view('families.show', ['familie' => $family]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit(Familie $family)
     {
-        //
+        return view('families.edit', ['familie' => $family]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Familie $family)
     {
-        //
+        $validated = $request->validate([
+            'naam' => 'required|string|max:255',
+            'adres' => 'nullable|string|max:255',
+        ]);
+
+        $family->update($validated);
+        return redirect()->route('families.index')->with('success', 'Familie bijgewerkt.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(Familie $family)
     {
-        //
+        $family->delete();
+        return redirect()->route('families.index')->with('success', 'Familie verwijderd.');
     }
 }

@@ -2,63 +2,67 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Familielid;
+use App\Models\Familie;
+use App\Models\SoortLid;
 use Illuminate\Http\Request;
 
 class FamilielidController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $familieleden = Familielid::with(['familie', 'soortLid'])->get();
+        return view('familieleden.index', compact('familieleden'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $families = Familie::all();
+        $soortenLeden = SoortLid::all();
+        return view('familieleden.create', compact('families', 'soortenLeden'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'naam' => 'required|string|max:255',
+            'geboortedatum' => 'required|date',
+            'familie_id' => 'required|exists:families,id',
+            'soort_lid_id' => 'required|exists:soorten_leden,id',
+        ]);
+
+        Familielid::create($validated);
+        return redirect()->route('familieleden.index')->with('success', 'Familielid toegevoegd.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(Familielid $familielid)
     {
-        //
+        return view('familieleden.show', ['familielid' => $familielid]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit(Familielid $familielid)
     {
-        //
+        $families = Familie::all();
+        $soortenLeden = SoortLid::all();
+        return view('familieleden.edit', compact('familielid', 'families', 'soortenLeden'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Familielid $familielid)
     {
-        //
+        $validated = $request->validate([
+            'naam' => 'required|string|max:255',
+            'geboortedatum' => 'required|date',
+            'familie_id' => 'required|exists:families,id',
+            'soort_lid_id' => 'required|exists:soorten_leden,id',
+        ]);
+
+        $familielid->update($validated);
+        return redirect()->route('familieleden.index')->with('success', 'Familielid bijgewerkt.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(Familielid $familielid)
     {
-        //
+        $familielid->delete();
+        return redirect()->route('familieleden.index')->with('success', 'Familielid verwijderd.');
     }
 }
